@@ -1,13 +1,23 @@
 import HashMap from './hashMap.js';
 
-const map = new HashMap();
+const test = new HashMap();
 
-map.set('apple', 'red');
-map.set('banana', 'yellow');
-console.log(map.length());    // Should be 2
+test.set('apple', 'red')
+test.set('banana', 'yellow')
+test.set('carrot', 'orange')
+test.set('dog', 'brown')
+test.set('elephant', 'gray')
+test.set('frog', 'green')
+test.set('grape', 'purple')
+test.set('hat', 'black')
+test.set('ice cream', 'white')
+test.set('jacket', 'blue')
+test.set('kite', 'pink')
+test.set('lion', 'golden')
+test.set('lion', 'olden')
+test.set('kite', 'golden')
+test.set('kte', 'golden')
 
-map.clear();
-console.log(map.length());    // Should be 0
-console.log(map.get('apple')); // Should be null
 
 
+console.log(test.buckets);

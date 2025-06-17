@@ -32,6 +32,27 @@ export default class HashMap {
         return this.buckets[hashCode];
     }
 
+    rehash() {
+        // save the entries in an empty array
+        let savedEntries = this.entries();
+        // clear all the entries
+        this.clear();
+        // reset the size
+        this.size = 0;
+        // double the number of the buckets in new Array
+        this.capacity *= 2;
+        this.buckets = new Array(this.capacity);
+        for (let i = 0; i < this.capacity; i++) {
+            this.buckets[i] = [];
+        }
+        // rehash and assign the entries
+
+        for (let [key, value] of savedEntries) {
+            this.set(key, value)
+        } 
+        console.log(`Rehashing complete. New capacity: ${this.capacity}`); 
+    }
+
     set(key, value) {
         const selectedBucket = this.getBucket(key);
 
@@ -50,8 +71,8 @@ export default class HashMap {
         console.log(`Added new entry: ${key} = ${value}`);
 
         //check if the size is not beyond the limit
-        if (this.size > this.capacity * this.loadFactor) {
-            this.capacity *= 2;
+        if (this.size > this.capacity * this.loadFactor ) {
+            this.rehash();
         }
 
     }
@@ -110,5 +131,50 @@ export default class HashMap {
         }
 
         this.size = 0;
+    }
+
+    
+
+    keys() {
+        let keyArr = [];
+
+        for (let i = 0; i < this.buckets.length; i++) {
+            for (let j = 0; j < this.buckets[i].length; j++) {
+                keyArr.push(this.buckets[i][j][0])
+            }
+        }
+
+        return keyArr;
+    }
+
+    //second approach
+    // keys() {
+    //     return this.buckets.flatMap(bucket => bucket.map(item => item[0]));
+    // }
+
+    values() {
+        let valueArr = [];
+
+        for (let i = 0; i < this.buckets.length; i++) {
+            for (let j = 0; j < this.buckets[i].length; j++) {
+                valueArr.push(this.buckets[i][j][1])
+            }
+        }
+
+        return valueArr;
+    }
+
+    entries() {
+        const entriesArr = []
+        for (let i = 0; i < this.buckets.length; i++) {
+            for (let j = 0; j < this.buckets[i].length; j++) {
+                const key = this.buckets[i][j][0];
+                const value = this.buckets[i][j][1];
+                entriesArr.push([key,value])
+
+            }
+        }
+
+        return entriesArr;
     }
 }
